@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
-import MapView, { Marker, MapEvent } from 'react-native-maps';
+import MapView, { MapPressEvent, Marker } from 'react-native-maps';
 
 import mapMarkerImg from '../../images/map-marker.png';
 
@@ -15,7 +15,7 @@ export default function SelectMapPosition() {
     navigation.navigate('OrphanageData', { position });
   }
 
-  function handleSelectMapPosition(event: MapEvent) {
+  function handleSelectMapPosition(event: MapPressEvent) {
     setPosition(event.nativeEvent.coordinate);
   }
 
@@ -34,7 +34,10 @@ export default function SelectMapPosition() {
         {position.latitude !== 0 && (
           <Marker
             icon={mapMarkerImg}
-            coordinate={{ latitude: position.latitude, longitude: position.longitude }}
+            coordinate={{
+              latitude: position.latitude,
+              longitude: position.longitude,
+            }}
           />
         )}
       </MapView>
@@ -45,13 +48,13 @@ export default function SelectMapPosition() {
         </RectButton>
       )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
   },
 
   mapStyle: {
@@ -76,5 +79,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_800ExtraBold',
     fontSize: 16,
     color: '#FFF',
-  }
-})
+  },
+});
